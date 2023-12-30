@@ -6,7 +6,7 @@ import { getTasks } from '@ahnafya/utils';
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
+export default function HomePage() {
 
   const [tasks, setTasks] = React.useState<any[]>([])
   const [total, setTotal] = React.useState<number>(0)
