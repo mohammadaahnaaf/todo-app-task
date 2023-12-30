@@ -1,4 +1,3 @@
-const inputDateString = "2019-08-24T20:15:22+06:00";
 
 export const formattedDateTime = (dnt: any) => {
     const inputDate = new Date(dnt);

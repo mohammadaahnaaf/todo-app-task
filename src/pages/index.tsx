@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import Head from 'next/head'
 import React from 'react';
 import { deleteTask, formattedDateTime, getTasks } from '@ahnafya/utils';
+import { Modal } from '@ahnafya/components';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -11,7 +12,7 @@ export default function HomePage() {
   const [tasks, setTasks] = React.useState<any[]>([])
   const [total, setTotal] = React.useState<number>(0)
   const [success, setSuccess] = React.useState<string>('')
-
+  const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
 
   // Get All Tasks
   React.useEffect(() => {
@@ -43,6 +44,27 @@ export default function HomePage() {
     }
   }
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  // Update Task 
+  function handleEdit() {
+
+  }
+
+  const editmodal = (
+    <Modal isOpen={isModalOpen} onClose={closeModal}>
+      <div className='text-[blue]'>
+        Edit here
+      </div>
+    </Modal>
+  )
+
   return (
     <>
       <Head>
@@ -50,6 +72,7 @@ export default function HomePage() {
       </Head>
       <main className={`min-h-screen bg-white ${inter.className}`}>
 
+        {editmodal}
         <header className='bg-[blue] text-white p-5 w-full'>
           <div className='max-w-5xl mx-auto w-full flex gap-4 items-center'>
             <code>Todo App Ahnafya</code>
@@ -60,14 +83,16 @@ export default function HomePage() {
         <div className='max-w-5xl mx-auto w-full p-4'>
           <div className='grid gap-4 items-center w-full'>
             {tasks?.map((x: any, index: number) => (
-              <div key={index} className={`rounded-lg flex justify-between gap-2 ${x.completed ? "bg-[green]" : " bg-[blue]"} hover:bg-black duration-300 hover:scale-95 cursor-pointer p-4`}>
+              <div key={index} className={`rounded-lg flex justify-between gap-2 ${x.completed ? "bg-[green]" : " bg-[blue]"} hover:bg-black duration-300 cursor-pointer p-4`}>
                 <div className='w-full'>
                   <p className='text-lg'>{index + 1}. {x.task}</p>
                   <p className='text-sm text-right w-full'>{formattedDateTime(x.completed_at)}
                   </p>
                 </div>
                 <div className='flex gap-2 items-end'>
-                  <button className='bg-sky-600 p-2 rounded-full ring-1 ring-white'>
+                  <button className='bg-sky-600 p-2 rounded-full ring-1 ring-white'
+                    onClick={openModal}
+                  >
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                       <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                     </svg>
